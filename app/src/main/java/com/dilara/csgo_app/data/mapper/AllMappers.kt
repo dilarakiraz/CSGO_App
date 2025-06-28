@@ -1,7 +1,33 @@
 package com.dilara.csgo_app.data.mapper
 
-import com.dilara.csgo_app.data.model.*
-import com.dilara.csgo_app.domain.model.*
+import com.dilara.csgo_app.data.model.AgentDto
+import com.dilara.csgo_app.data.model.CategoryDto
+import com.dilara.csgo_app.data.model.CollectionDto
+import com.dilara.csgo_app.data.model.CrateDto
+import com.dilara.csgo_app.data.model.CrateItemDto
+import com.dilara.csgo_app.data.model.LootListDto
+import com.dilara.csgo_app.data.model.PatternDto
+import com.dilara.csgo_app.data.model.RarityDto
+import com.dilara.csgo_app.data.model.SimpleCrateDto
+import com.dilara.csgo_app.data.model.SkinDto
+import com.dilara.csgo_app.data.model.StickerDto
+import com.dilara.csgo_app.data.model.TeamDto
+import com.dilara.csgo_app.data.model.WeaponDto
+import com.dilara.csgo_app.data.model.WearDto
+import com.dilara.csgo_app.domain.model.Agent
+import com.dilara.csgo_app.domain.model.Category
+import com.dilara.csgo_app.domain.model.Crate
+import com.dilara.csgo_app.domain.model.CrateItem
+import com.dilara.csgo_app.domain.model.LootList
+import com.dilara.csgo_app.domain.model.Pattern
+import com.dilara.csgo_app.domain.model.Rarity
+import com.dilara.csgo_app.domain.model.SimpleCrate
+import com.dilara.csgo_app.domain.model.Skin
+import com.dilara.csgo_app.domain.model.SkinCollection
+import com.dilara.csgo_app.domain.model.Sticker
+import com.dilara.csgo_app.domain.model.Team
+import com.dilara.csgo_app.domain.model.Weapon
+import com.dilara.csgo_app.domain.model.Wear
 
 // Common mappers
 fun RarityDto.toDomain(): Rarity {

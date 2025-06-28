@@ -1,0 +1,27 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="36dp"
+    android:viewportWidth="108"
+    android:viewportHeight="36">
+    <!-- CS -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M8,28 Q8,18 18,18 L24,18 Q28,18 28,22 L28,24 Q28,28 24,28 L18,28 Q8,28 8,18" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M32,28 L32,18 L40,18 Q44,18 44,22 L44,24 Q44,28 40,28 L32,28" />
+    <!-- Soldier Silhouette (minimalist) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M52,18 L54,18 L54,24 L56,24 L56,26 L54,26 L54,28 L52,28 L52,26 L50,26 L50,24 L52,24 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,20 L60,20 L60,22 L54,22 Z" />
+    <!-- GO -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M68,28 Q68,18 78,18 L84,18 Q88,18 88,22 L88,24 Q88,28 84,28 L78,28 Q68,28 68,18" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M92,18 L100,18 Q104,18 104,22 L104,24 Q104,28 100,28 L92,28 Z" />
+</vector> 

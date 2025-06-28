@@ -1,7 +1,6 @@
 package com.dilara.csgo_app.ui.main
 
 import androidx.lifecycle.ViewModel
-import com.dilara.csgo_app.ui.main.MainContract.UiAction
 import com.dilara.csgo_app.ui.main.MainContract.UiEffect
 import com.dilara.csgo_app.ui.main.MainContract.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +22,7 @@ class MainViewModel @Inject constructor() : ViewModel() {
     private val _uiEffect by lazy { Channel<UiEffect>() }
     val uiEffect: Flow<UiEffect> by lazy { _uiEffect.receiveAsFlow() }
 
-    fun onAction(uiAction: UiAction) {
+    fun onAction() {
     }
 
     private fun updateUiState(block: UiState.() -> UiState) {

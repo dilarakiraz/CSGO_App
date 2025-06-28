@@ -23,15 +23,18 @@ fun RarityBadge(
     } catch (e: Exception) {
         Color.Gray
     }
-    
+
     Text(
         text = rarityName,
         modifier = modifier
-            .clip(RoundedCornerShape(4.dp))
-            .background(color.copy(alpha = 0.2f))
-            .padding(horizontal = 8.dp, vertical = 4.dp),
+            .clip(RoundedCornerShape(8.dp))
+            .background(
+                color.copy(alpha = 0.15f),
+                RoundedCornerShape(8.dp)
+            )
+            .padding(horizontal = 10.dp, vertical = 6.dp),
         color = color,
-        fontSize = 12.sp,
+        fontSize = 11.sp,
         fontWeight = FontWeight.Bold
     )
 } 

@@ -10,7 +10,6 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -18,30 +17,36 @@ import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
     primary = CsgoOrange,
-    secondary = CsgoBlue,
-    tertiary = CsgoPurple,
-    background = CsgoDark,
-    surface = CsgoDarkGray,
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color.White,
-    onSurface = Color.White,
-    error = CsgoRed
+    secondary = CsgoGold,
+    tertiary = CsgoBlue,
+    background = CsgoDarkBlue,
+    surface = CsgoNavy,
+    onPrimary = CsgoWhite,
+    onSecondary = CsgoBlack,
+    onTertiary = CsgoWhite,
+    onBackground = CsgoWhite,
+    onSurface = CsgoWhite,
+    surfaceVariant = CsgoLightGray,
+    onSurfaceVariant = CsgoWhite,
+    outline = CsgoOrange,
+    outlineVariant = CsgoGray
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = CsgoOrange,
-    secondary = CsgoBlue,
-    tertiary = CsgoPurple,
-    background = Color.White,
-    surface = Color(0xFFF5F5F5),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = CsgoDark,
-    onSurface = CsgoDark,
-    error = CsgoRed
+    secondary = CsgoGold,
+    tertiary = CsgoBlue,
+    background = CsgoWhite,
+    surface = CsgoLightGray,
+    onPrimary = CsgoWhite,
+    onSecondary = CsgoBlack,
+    onTertiary = CsgoWhite,
+    onBackground = CsgoBlack,
+    onSurface = CsgoBlack,
+    surfaceVariant = CsgoGray,
+    onSurfaceVariant = CsgoBlack,
+    outline = CsgoOrange,
+    outlineVariant = CsgoGray
 )
 
 @Composable
@@ -56,6 +61,7 @@ fun CsgoAppTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
+
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }

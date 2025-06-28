@@ -20,5 +20,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "CSGO_App"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
  

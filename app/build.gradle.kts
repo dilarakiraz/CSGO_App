@@ -92,4 +92,9 @@ dependencies {
 
     // Coil
     implementation(libs.coil.compose)
+
+    // DataStore and Moshi
+    implementation("androidx.datastore:datastore-preferences:1.1.7")
+    implementation("com.squareup.moshi:moshi:1.15.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.15.0")
 }

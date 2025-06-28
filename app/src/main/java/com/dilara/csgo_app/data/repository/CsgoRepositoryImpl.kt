@@ -1,7 +1,7 @@
 package com.dilara.csgo_app.data.repository
 
 import com.dilara.csgo_app.data.api.CsgoApiService
-import com.dilara.csgo_app.data.mapper.*
+import com.dilara.csgo_app.data.mapper.toDomain
 import com.dilara.csgo_app.domain.model.Agent
 import com.dilara.csgo_app.domain.model.Crate
 import com.dilara.csgo_app.domain.model.Skin

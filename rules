@@ -1,0 +1,135 @@
+# =============================================
+# 🧠 Cursor için Proje Geliştirme Kuralları
+# =============================================
+
+# 🎯 PROJE TANIMI:
+# Kotlin + Jetpack Compose kullanarak CSGO API'den veri çeken,
+# skin, sticker, agent vb. içerikleri listeleyen bir Android uygulaması.
+
+# =============================================
+# 📦 TEKNOLOJİLER
+# =============================================
+
+- Kotlin dili kullanılmalı.
+- UI sadece Jetpack Compose ile yazılmalı.
+- XML kullanılmamalı.
+- State yönetimi Compose State veya Kotlin StateFlow ile yapılmalı.
+- Asenkron işlemler için Kotlin Coroutines kullanılmalı.
+- Retrofit + Moshi ile API istekleri yapılmalı.
+- Hilt ile dependency injection sağlanmalı.
+- Navigation Compose kullanılmalı.
+- Görseller Coil ile yüklenmeli.
+
+# =============================================
+# 🧱 MİMARİ & KATMANLAR (MVVM + Clean Architecture)
+# =============================================
+
+# Katmanlar:
+- data/
+    - model/ → API'den gelen DTO'lar
+    - api/ → Retrofit interface'leri
+    - repository/ → Repository implementasyonu
+- domain/
+    - model/ → işlenmiş domain modelleri
+    - repository/ → arayüzler
+    - usecase/ → iş kuralları (isteğe bağlı)
+- ui/
+    - screens/ → her veri tipi için Compose ekranı
+    - components/ → yeniden kullanılabilir UI parçaları
+    - theme/ → renk, yazı tipi ve boyut ayarları
+- di/ → Hilt modülleri
+- util/ → yardımcı fonksiyonlar, extension’lar
+- MainActivity.kt → NavHost barındırmalı
+
+# =============================================
+# 🌐 API KULLANIMI
+# =============================================
+
+- Tüm veri `https://raw.githubusercontent.com/ByMykel/CSGO-API` adresinden alınmalı.
+- Her istek `suspend` fonksiyon olmalı.
+- Retrofit arayüzü `CsgoApiService` içinde tanımlanmalı.
+- Her veri tipi için ayrı istek yazılmalı.
+- JSON verileri `@Json` ile eşleştirilmiş data class’lara aktarılmalı.
+- DTO → domain → UI dönüşümleri mapper fonksiyonlarıyla yapılmalı.
+
+# =============================================
+# ⚙️ VIEWMODEL & STATE YÖNETİMİ
+# =============================================
+
+- Her ekranın kendi ViewModel’i olmalı.
+- UI state’i `StateFlow`, `mutableStateOf`, veya `sealed class` ile kontrol edilmeli.
+- Hata, yüklenme ve başarı durumları ayrıştırılmalı.
+
+Örnek:
+sealed class UiState<out T> {
+    object Loading : UiState<Nothing>()
+    data class Success<T>(val data: T) : UiState<T>()
+    data class Error(val message: String) : UiState<Nothing>()
+}
+
+# =============================================
+# 🎨 UI TASARIM KURALLARI
+# =============================================
+
+- Tüm UI bileşenleri `@Composable` olarak yazılmalı.
+- `LazyColumn` ve `LazyVerticalGrid` ile listeleme yapılmalı.
+- Her veri öğesi için kart görünüm (`ItemCard`) oluşturulmalı.
+- Rarity (nadirdik) rengine göre arka plan, kenarlık veya badge uygulanmalı.
+- Detay ekranları görsel, açıklama, rarity ve koleksiyon bilgilerini içermeli.
+- Tema Material3 olmalı. Renkler, yazı tipi ve spacing merkezi olarak tanımlanmalı.
+- Boş ekran, yükleme ekranı ve hata ekranı kullanıcıya açıkça gösterilmeli.
+- Kullanıcı deneyimi odaklı, tutarlı tasarım kullanılmalı.
+
+# =============================================
+# 🔁 DÖNÜŞÜM KURALLARI (MAPPING)
+# =============================================
+
+- DTO → Domain → UI model dönüşümleri yapılmalı.
+- Mapping fonksiyonları `*.mapper.kt` içinde olmalı.
+
+Örnek:
+fun SkinDto.toDomain(): Skin
+fun Skin.toUiModel(): SkinUiModel
+
+# =============================================
+# 🔐 HATA YÖNETİMİ
+# =============================================
+
+- API istekleri try/catch ile korunmalı.
+- Hatalar ViewModel üzerinden UI’ya aktarılmalı.
+- UI'da hata mesajı ve retry butonu gösterilmeli.
+- Internet bağlantısı yoksa kullanıcı bilgilendirilmeli.
+
+# =============================================
+# 🧱 COMPONENT STANDARTLARI
+# =============================================
+
+- `ItemCard`, `RarityBadge`, `ErrorView`, `LoadingView` gibi bileşenler oluşturulmalı.
+- Görseller `Coil` ile `AsyncImage()` olarak yüklenmeli.
+- Ripple efektiyle tıklanabilirlik gösterilmeli.
+
+# =============================================
+# 🧪 TEST & BAKIM
+# =============================================
+
+- ViewModel test edilebilir olmalı.
+- Repository interface’leri fake/mock ile test edilebilmeli.
+- Kod modüler, genişletilebilir ve okunabilir yazılmalı.
+
+# =============================================
+# 🔄 GELECEKTEKİ GENİŞLETME İÇİN
+# =============================================
+
+- Çoklu dil desteği eklenebilir (örneğin en/tr/de).
+- Favorilere ekleme, filtreleme ve sıralama özellikleri eklenebilir.
+- Room ile offline cache opsiyonu eklenebilir.
+- Kullanıcı arayüzü sade ve oyun evrenine uygun temada kalmalı.
+
+# =============================================
+# 🧹 YASAKLAR / YAPILMAMASI GEREKENLER
+# =============================================
+
+- XML UI kullanılmamalı.
+- Compose dışı navigation veya state yönetimi kullanılmamalı.
+- Retrofit dışında HTTP kütüphanesi kullanılmamalı.
+- API’den gelen veriler doğrudan UI'da kullanılmamalı (her zaman map edilmeli).
