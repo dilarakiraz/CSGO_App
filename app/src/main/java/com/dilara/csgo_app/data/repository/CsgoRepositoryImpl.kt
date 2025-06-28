@@ -13,19 +13,19 @@ class CsgoRepositoryImpl @Inject constructor(
     private val apiService: CsgoApiService
 ) : CsgoRepository {
 
-    override suspend fun getSkins(): List<Skin> {
-        return apiService.getSkins().map { it.toDomain() }
+    override suspend fun getSkins(language: String): List<Skin> {
+        return apiService.getSkins(language).map { it.toDomain() }
     }
 
-    override suspend fun getAgents(): List<Agent> {
-        return apiService.getAgents().map { it.toDomain() }
+    override suspend fun getAgents(language: String): List<Agent> {
+        return apiService.getAgents(language).map { it.toDomain() }
     }
 
-    override suspend fun getStickers(): List<Sticker> {
-        return apiService.getStickers().map { it.toDomain() }
+    override suspend fun getStickers(language: String): List<Sticker> {
+        return apiService.getStickers(language).map { it.toDomain() }
     }
 
-    override suspend fun getCrates(): List<Crate> {
-        return apiService.getCrates().map { it.toDomain() }
+    override suspend fun getCrates(language: String): List<Crate> {
+        return apiService.getCrates(language).map { it.toDomain() }
     }
 } 

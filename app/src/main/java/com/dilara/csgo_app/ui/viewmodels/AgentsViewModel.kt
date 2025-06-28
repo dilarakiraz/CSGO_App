@@ -21,14 +21,14 @@ class AgentsViewModel @Inject constructor(
     val uiState: StateFlow<UiState<List<Agent>>> = _uiState.asStateFlow()
 
     init {
-        loadAgents()
+        loadAgents("tr") // Default to Turkish
     }
 
-    fun loadAgents() {
+    fun loadAgents(language: String = "tr") {
         viewModelScope.launch {
             _uiState.value = UiState.Loading
             try {
-                val agents = repository.getAgents()
+                val agents = repository.getAgents(language)
                 _uiState.value = UiState.Success(agents)
             } catch (e: Exception) {
                 _uiState.value = UiState.Error(e.message ?: "Unknown error occurred")

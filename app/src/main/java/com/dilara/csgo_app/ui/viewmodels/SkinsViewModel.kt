@@ -21,14 +21,14 @@ class SkinsViewModel @Inject constructor(
     val uiState: StateFlow<UiState<List<Skin>>> = _uiState.asStateFlow()
 
     init {
-        loadSkins()
+        loadSkins("tr") // Default to Turkish
     }
 
-    fun loadSkins() {
+    fun loadSkins(language: String = "tr") {
         viewModelScope.launch {
             _uiState.value = UiState.Loading
             try {
-                val skins = repository.getSkins()
+                val skins = repository.getSkins(language)
                 _uiState.value = UiState.Success(skins)
             } catch (e: Exception) {
                 _uiState.value = UiState.Error(e.message ?: "Unknown error occurred")

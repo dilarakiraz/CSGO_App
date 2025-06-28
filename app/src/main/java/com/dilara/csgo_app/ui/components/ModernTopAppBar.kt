@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -45,12 +46,13 @@ fun ModernTopAppBar(
     title: String,
     onBackClick: (() -> Unit)? = null,
     onHomeClick: (() -> Unit)? = null,
+    onDrawerClick: (() -> Unit)? = null,
     actions: @Composable (() -> Unit)? = null,
     showBackButton: Boolean = true,
-    showHomeButton: Boolean = true
+    showHomeButton: Boolean = true,
+    showDrawerButton: Boolean = false
 ) {
     var isVisible by remember { mutableStateOf(false) }
-
     // Animation for title appearance
     val titleScale by animateFloatAsState(
         targetValue = if (isVisible) 1f else 0.8f,
@@ -58,7 +60,6 @@ fun ModernTopAppBar(
         label = "titleScale"
     )
 
-    // Trigger animation
     androidx.compose.runtime.LaunchedEffect(Unit) {
         isVisible = true
     }
@@ -98,6 +99,24 @@ fun ModernTopAppBar(
                 },
                 navigationIcon = {
                     Row {
+                        if (showDrawerButton && onDrawerClick != null) {
+                            IconButton(
+                                onClick = onDrawerClick,
+                                modifier = Modifier
+                                    .size(40.dp)
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .background(Color.White.copy(alpha = 0.1f))
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Menu,
+                                    contentDescription = "Menu",
+                                    tint = Color.White,
+                                    modifier = Modifier.size(24.dp)
+                                )
+                            }
+                            Spacer(modifier = Modifier.width(8.dp))
+                        }
+
                         if (showBackButton && onBackClick != null) {
                             IconButton(
                                 onClick = onBackClick,

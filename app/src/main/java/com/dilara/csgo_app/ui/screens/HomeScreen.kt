@@ -46,7 +46,8 @@ fun HomeScreen(
     onNavigateToAgents: () -> Unit,
     onNavigateToStickers: () -> Unit,
     onNavigateToCrates: () -> Unit,
-    onNavigateToFavorites: () -> Unit
+    onNavigateToFavorites: () -> Unit,
+    onDrawerClick: () -> Unit = {}
 ) {
     val menuItems = listOf(
         HomeMenuItem(
@@ -97,7 +98,9 @@ fun HomeScreen(
             ModernTopAppBar(
                 title = "CS:GO Arsenal",
                 showBackButton = false,
-                showHomeButton = false
+                showHomeButton = false,
+                showDrawerButton = true,
+                onDrawerClick = onDrawerClick
             )
         }
     ) { paddingValues ->

@@ -21,14 +21,14 @@ class CratesViewModel @Inject constructor(
     val uiState: StateFlow<UiState<List<Crate>>> = _uiState.asStateFlow()
 
     init {
-        loadCrates()
+        loadCrates("tr")
     }
 
-    fun loadCrates() {
+    fun loadCrates(language: String = "tr") {
         viewModelScope.launch {
             _uiState.value = UiState.Loading
             try {
-                val crates = repository.getCrates()
+                val crates = repository.getCrates(language)
                 _uiState.value = UiState.Success(crates)
             } catch (e: Exception) {
                 _uiState.value = UiState.Error(e.message ?: "Unknown error occurred")
