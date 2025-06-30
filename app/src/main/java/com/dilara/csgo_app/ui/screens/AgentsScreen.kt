@@ -1,33 +1,52 @@
 package com.dilara.csgo_app.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.dilara.csgo_app.domain.model.Agent
 import com.dilara.csgo_app.domain.model.Rarity
 import com.dilara.csgo_app.domain.model.Team
+import com.dilara.csgo_app.ui.common.SortOption
 import com.dilara.csgo_app.ui.common.UiState
 import com.dilara.csgo_app.ui.components.EmptyScreen
 import com.dilara.csgo_app.ui.components.ErrorView
+import com.dilara.csgo_app.ui.components.FilterSortSheet
 import com.dilara.csgo_app.ui.components.LoadingView
 import com.dilara.csgo_app.ui.components.ModernItemCard
 import com.dilara.csgo_app.ui.components.SkinsScreenAppBar
+import com.dilara.csgo_app.ui.viewmodels.AgentsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,66 +55,143 @@ fun AgentsScreen(
     onRetry: () -> Unit,
     onAgentClick: (Agent) -> Unit,
     onBackClick: () -> Unit,
-    onNavigateToHome: () -> Unit
+    onNavigateToHome: () -> Unit,
+    viewModel: AgentsViewModel = androidx.hilt.navigation.compose.hiltViewModel()
 ) {
-    Column {
-        SkinsScreenAppBar(
-            title = "Agents",
-            onBackClick = onBackClick,
-            onSearchClick = null
-        )
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(
-                            MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                            MaterialTheme.colorScheme.background
+    val filterSortState by viewModel.filterSortState.collectAsState()
+    val showDialog = remember { mutableStateOf(false) }
+
+    Box(Modifier.fillMaxSize()) {
+        Column {
+            SkinsScreenAppBar(
+                title = "Agents",
+                onBackClick = onBackClick,
+                onSearchClick = null,
+                onFilterClick = { showDialog.value = true }
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+                    .background(
+                        Brush.verticalGradient(
+                            colors = listOf(
+                                MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                                MaterialTheme.colorScheme.background
+                            )
                         )
                     )
-                )
-        ) {
-            when (uiState) {
-                is UiState.Loading -> {
-                    LoadingView()
-                }
+            ) {
+                val filteredAgents = (uiState as? UiState.Success)?.data
+                    ?.filter { agent ->
+                        (filterSortState.selectedRarities.isEmpty() || agent.rarity.name in filterSortState.selectedRarities) &&
+                                (filterSortState.selectedTeam == null || agent.team.name == filterSortState.selectedTeam)
+                    }
+                    ?.sortedWith(
+                        when (filterSortState.sortOption) {
+                            SortOption.AZ -> compareBy { it.name }
+                            SortOption.ZA -> compareByDescending { it.name }
+                            SortOption.RARITY_ASC -> compareBy { it.rarity.name }
+                            SortOption.RARITY_DESC -> compareByDescending { it.rarity.name }
+                        }
+                    ) ?: emptyList()
 
-                is UiState.Success -> {
-                    if (uiState.data.isEmpty()) {
-                        EmptyScreen(
-                            icon = Icons.Default.Person,
-                            title = "No Agents Found",
-                            description = "No character agents are available at the moment.",
-                            onActionClick = onRetry,
-                            actionText = "Retry"
-                        )
-                    } else {
-                        LazyVerticalGrid(
-                            columns = GridCells.Fixed(2),
-                            contentPadding = PaddingValues(16.dp),
-                            horizontalArrangement = Arrangement.spacedBy(16.dp),
-                            verticalArrangement = Arrangement.spacedBy(16.dp)
-                        ) {
-                            items(uiState.data) { agent ->
-                                ModernItemCard(
-                                    title = agent.name,
-                                    subtitle = agent.team.name,
-                                    imageUrl = agent.image,
-                                    rarityName = agent.rarity.name,
-                                    rarityColor = agent.rarity.color,
-                                    onClick = { onAgentClick(agent) }
-                                )
+                when (uiState) {
+                    is UiState.Loading -> LoadingView()
+                    is UiState.Success -> {
+                        if (filteredAgents.isEmpty()) {
+                            EmptyScreen(
+                                icon = Icons.Default.Person,
+                                title = "No Agents Found",
+                                description = "No character agents are available at the moment.",
+                                onActionClick = onRetry,
+                                actionText = "Retry"
+                            )
+                        } else {
+                            LazyVerticalGrid(
+                                columns = GridCells.Fixed(2),
+                                contentPadding = PaddingValues(16.dp),
+                                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                                verticalArrangement = Arrangement.spacedBy(16.dp)
+                            ) {
+                                items(filteredAgents) { agent ->
+                                    ModernItemCard(
+                                        title = agent.name,
+                                        subtitle = agent.team.name,
+                                        imageUrl = agent.image,
+                                        rarityName = agent.rarity.name,
+                                        rarityColor = agent.rarity.color,
+                                        onClick = { onAgentClick(agent) }
+                                    )
+                                }
                             }
                         }
                     }
-                }
 
-                is UiState.Error -> {
-                    ErrorView(
-                        message = uiState.message,
-                        onRetry = onRetry
+                    is UiState.Error -> ErrorView(message = uiState.message, onRetry = onRetry)
+                }
+            }
+        }
+        if (showDialog.value) {
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .zIndex(2f)
+            ) {
+                Box(
+                    Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.45f))
+                        .clickable(onClick = { showDialog.value = false })
+                ) {}
+                Card(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .fillMaxWidth(0.95f)
+                        .wrapContentHeight(),
+                    shape = RoundedCornerShape(24.dp),
+                    elevation = CardDefaults.cardElevation(8.dp)
+                ) {
+                    Box(Modifier.padding(top = 8.dp, end = 8.dp)) {
+                        IconButton(
+                            onClick = { showDialog.value = false },
+                            modifier = Modifier.align(Alignment.TopEnd)
+                        ) {
+                            Icon(Icons.Default.Close, contentDescription = "Kapat")
+                        }
+                    }
+                    FilterSortSheet(
+                        rarityOptions = (uiState as? UiState.Success)?.data?.map { it.rarity.name }?.distinct() ?: emptyList(),
+                        selectedRarities = filterSortState.selectedRarities,
+                        onRarityChange = { viewModel.updateRarity(it) },
+                        collectionOptions = (uiState as? UiState.Success)?.data?.map { it.team.name }?.distinct() ?: emptyList(),
+                        selectedCollection = filterSortState.selectedTeam,
+                        onCollectionChange = { viewModel.updateTeam(it) },
+                        priceRange = 0f..0f,
+                        selectedPriceRange = 0f..0f,
+                        onPriceChange = {},
+                        sortOptions = listOf("A-Z", "Z-A", "Rarity ↑", "Rarity ↓"),
+                        selectedSort = when (filterSortState.sortOption) {
+                            SortOption.AZ -> "A-Z"
+                            SortOption.ZA -> "Z-A"
+                            SortOption.RARITY_ASC -> "Rarity ↑"
+                            SortOption.RARITY_DESC -> "Rarity ↓"
+                        },
+                        onSortChange = {
+                            viewModel.updateSortOption(
+                                when (it) {
+                                    "A-Z" -> SortOption.AZ
+                                    "Z-A" -> SortOption.ZA
+                                    "Rarity ↑" -> SortOption.RARITY_ASC
+                                    "Rarity ↓" -> SortOption.RARITY_DESC
+                                    else -> SortOption.AZ
+                                }
+                            )
+                        },
+                        onClear = { viewModel.clearFilters() },
+                        onApply = { showDialog.value = false },
+                        onDismiss = { showDialog.value = false },
+                        showPriceFilter = false
                     )
                 }
             }

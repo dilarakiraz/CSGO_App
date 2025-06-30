@@ -8,14 +8,14 @@ plugins {
 
 android {
     namespace = "com.dilara.csgo_app"
-    compileSdk = 34
+    compileSdk = 35
 
     android.buildFeatures.buildConfig = true
 
     defaultConfig {
         applicationId = "com.dilara.csgo_app"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -72,6 +72,8 @@ dependencies {
     androidTestImplementation(libs.compose.ui.test.junit4)
     debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.compose.ui.test.manifest)
+
+    implementation("androidx.compose.material:material:1.8.3")
 
     // Retrofit + Moshi
     implementation(libs.retrofit)

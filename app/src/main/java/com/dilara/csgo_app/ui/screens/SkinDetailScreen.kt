@@ -45,7 +45,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.dilara.csgo_app.domain.model.Category
 import com.dilara.csgo_app.domain.model.Pattern
@@ -63,13 +62,12 @@ import com.dilara.csgo_app.ui.components.RarityBadge
 import com.dilara.csgo_app.ui.viewmodels.FavoritesViewModel
 import com.dilara.csgo_app.util.cleanDescription
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SkinDetailScreen(
     skin: Skin?,
     onBackClick: () -> Unit,
     onNavigateToHome: () -> Unit,
-    favoritesViewModel: FavoritesViewModel = viewModel()
+    favoritesViewModel: FavoritesViewModel
 ) {
     val context = LocalContext.current
     var showToast by remember { mutableStateOf<String?>(null) }
@@ -166,7 +164,6 @@ fun SkinDetailScreen(
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(bottom = 100.dp)
                 ) {
-                    // Hero Image Section
                     item {
                         Box(
                             modifier = Modifier
@@ -174,7 +171,6 @@ fun SkinDetailScreen(
                                 .height(400.dp)
                                 .zIndex(1f)
                         ) {
-                            // Background blur effect
                             AsyncImage(
                                 model = skin.image,
                                 contentDescription = null,
@@ -183,7 +179,6 @@ fun SkinDetailScreen(
                                     .graphicsLayer { alpha = 0.3f },
                                 contentScale = ContentScale.Crop
                             )
-                            // Gradient overlay
                             Box(
                                 modifier = Modifier
                                     .fillMaxSize()
@@ -197,7 +192,6 @@ fun SkinDetailScreen(
                                         )
                                     )
                             )
-                            // Main image
                             AsyncImage(
                                 model = skin.image,
                                 contentDescription = skin.name,
@@ -208,7 +202,6 @@ fun SkinDetailScreen(
                             )
                         }
                     }
-                    // Content Section
                     item {
                         Column(
                             modifier = Modifier
@@ -223,7 +216,6 @@ fun SkinDetailScreen(
                             }
                             Spacer(modifier = Modifier.height(16.dp))
 
-                            // Title and Rarity Card
                             AnimatedVisibility(
                                 visible = true,
                                 enter = fadeIn(animationSpec = tween(600)) + slideInVertically(
@@ -286,7 +278,6 @@ fun SkinDetailScreen(
 
                             Spacer(modifier = Modifier.height(16.dp))
 
-                            // Weapon Info Card
                             AnimatedVisibility(
                                 visible = true,
                                 enter = fadeIn(animationSpec = tween(800)) + slideInVertically(
@@ -309,7 +300,6 @@ fun SkinDetailScreen(
 
                             Spacer(modifier = Modifier.height(16.dp))
 
-                            // Collections Card
                             if (skin.collections.isNotEmpty()) {
                                 AnimatedVisibility(
                                     visible = true,
@@ -332,7 +322,6 @@ fun SkinDetailScreen(
                                 Spacer(modifier = Modifier.height(16.dp))
                             }
 
-                            // Crates Card
                             if (skin.crates.isNotEmpty()) {
                                 AnimatedVisibility(
                                     visible = true,
@@ -355,7 +344,6 @@ fun SkinDetailScreen(
                                 Spacer(modifier = Modifier.height(16.dp))
                             }
 
-                            // Team Info Card
                             if (skin.team.name.isNotEmpty()) {
                                 AnimatedVisibility(
                                     visible = true,
@@ -479,6 +467,7 @@ fun SkinDetailScreenPreview() {
     SkinDetailScreen(
         skin = sampleSkin,
         onBackClick = {},
-        onNavigateToHome = {}
+        onNavigateToHome = {},
+        favoritesViewModel = FavoritesViewModel()
     )
 } 

@@ -25,16 +25,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.dilara.csgo_app.R
 
 @Composable
 fun SkinsScreenAppBar(
     title: String,
     onBackClick: (() -> Unit)? = null,
-    onSearchClick: (() -> Unit)? = null
+    onSearchClick: (() -> Unit)? = null,
+    onFilterClick: (() -> Unit)? = null
 ) {
     Box(
         modifier = Modifier
@@ -57,7 +60,7 @@ fun SkinsScreenAppBar(
                 .height(80.dp)
                 .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.Start
         ) {
             if (onBackClick != null) {
                 IconButton(
@@ -100,8 +103,20 @@ fun SkinsScreenAppBar(
                         tint = Color.White
                     )
                 }
-            } else {
-                Spacer(modifier = Modifier.width(44.dp))
+            }
+            if (onFilterClick != null) {
+                IconButton(
+                    onClick = onFilterClick,
+                    modifier = Modifier
+                        .size(44.dp)
+                        .background(Color.White.copy(alpha = 0.08f), CircleShape)
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.filter_icon),
+                        contentDescription = "Filter",
+                        tint = Color.White
+                    )
+                }
             }
         }
     }
@@ -113,6 +128,7 @@ fun SkinsScreenAppBarPreview() {
     SkinsScreenAppBar(
         title = "CS:GO Skins",
         onBackClick = {},
-        onSearchClick = {}
+        onSearchClick = {},
+        onFilterClick = {}
     )
 } 

@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,16 +24,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dilara.csgo_app.ui.components.EmptyScreen
+import com.dilara.csgo_app.ui.components.FavoriteIconStyle
 import com.dilara.csgo_app.ui.components.ModernAppBar
 import com.dilara.csgo_app.ui.components.ModernItemCard
 import com.dilara.csgo_app.ui.viewmodels.FavoritesViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FavoritesScreen(
     onBackClick: () -> Unit,
     onNavigateToHome: () -> Unit,
-    onItemClick: (String, String) -> Unit = { _, _ -> }, // type, id
+    onItemClick: (String, String) -> Unit = { _, _ -> },
     favoritesViewModel: FavoritesViewModel
 ) {
     val favorites = favoritesViewModel.favoriteItems.value
@@ -96,7 +95,8 @@ fun FavoritesScreen(
                                 favoritesViewModel.toggleFavorite(context, favorite.id)
                                 showToast = "Favorilerden çıkarıldı"
                             },
-                            onClick = { onItemClick(favorite.type, favorite.id) }
+                            onClick = { onItemClick(favorite.type, favorite.id) },
+                            favoriteStyle = FavoriteIconStyle.Prominent
                         )
                     }
                 }
