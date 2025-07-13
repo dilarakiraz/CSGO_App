@@ -25,35 +25,25 @@ This application uses [ByMykel/CSGO-API](https://github.com/ByMykel/CSGO-API).
 
 ## 📱 Screenshots
 
-### Splash & Main Menu
-| Splash | Main Menu |
-|--------|-----------|
-| ![Splash](screenshots/splash.jpg) | ![Home](screenshots/home.jpg) |
+### Main Screens
+| Splash | Home | Navigation | Agents |
+|--------|------|------------|--------|
+| <img src="screenshots/splash.png" width="200" alt="Splash"> | <img src="screenshots/home.png" width="200" alt="Home"> | <img src="screenshots/navbar.png" width="200" alt="Navigation"> | <img src="screenshots/agentscreen.png" width="200" alt="Agents"> |
 
-### Drawer & Language Selection
-| Drawer Menu |
-|-------------|
-| ![Drawer](screenshots/drawer.jpg) |
-
-### Agents Screen
-| Agents Grid | Agent Search Sheet | Agent Search Result | Agent Detail |
-|-------------|--------------------|---------------------|--------------|
-| ![Agents](screenshots/agents.jpg) | ![Agent Search Sheet](screenshots/agent_search_sheet.jpg) | ![Agent Search Result](screenshots/agent_search_result.jpg) | ![Agent Detail](screenshots/agent_detail.jpg) |
-
-### Skins Screen
-| Skins Grid | Skin Filter Sheet | Skin Filter Active | Skin Detail |
-|------------|------------------|-------------------|-------------|
-| ![Skins](screenshots/skins.jpg) | ![Skin Filter Sheet](screenshots/skin_filter_sheet.jpg) | ![Skin Filter Active](screenshots/skin_filter_active.jpg) | ![Skin Detail](screenshots/skin_detail.jpg) |
+### Skins & Filters
+| Skins Grid | Filter Sheet | Filter Active | Skin Detail |
+|------------|--------------|---------------|-------------|
+| <img src="screenshots/skinsscreen.png" width="200" alt="Skins"> | <img src="screenshots/filterscreen.png" width="200" alt="Filter Sheet"> | <img src="screenshots/filter2.png" width="200" alt="Filter Active"> | <img src="screenshots/detail.png" width="200" alt="Skin Detail"> |
 
 ### Crates & Stickers
 | Crates Grid | Crate Detail | Stickers Grid | Sticker Detail |
-|-------------|-------------|---------------|---------------|
-| ![Crates](screenshots/crates.jpg) | ![Crate Detail](screenshots/crate_detail.jpg) | ![Stickers](screenshots/stickers.jpg) | ![Sticker Detail](screenshots/sticker_detail.jpg) |
+|-------------|--------------|---------------|----------------|
+| <img src="screenshots/createsscreen.png" width="200" alt="Crates"> | <img src="screenshots/createsdetail.png" width="200" alt="Crate Detail"> | <img src="screenshots/stickerscreen.png" width="200" alt="Stickers"> | <img src="screenshots/stickerdetail.png" width="200" alt="Sticker Detail"> |
 
-### Favorites
-| Favorites |
-|-----------|
-| ![Favorites](screenshots/favorites.jpg) |
+### Search & Favorites
+| Agent Search | Agent Detail | Favorites |
+|--------------|--------------|-----------|
+| <img src="screenshots/bottomsheetsearch.png" width="200" alt="Agent Search"> | <img src="screenshots/agentdetail.png" width="200" alt="Agent Detail"> | <img src="screenshots/favscreen.png" width="200" alt="Favorites"> |
 
 ---
 
